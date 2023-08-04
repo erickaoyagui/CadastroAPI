@@ -1,4 +1,7 @@
 ﻿using CadastroAPI.Domain.Entities;
+using CadastroAPI.Domain.Interfaces;
+using CadastroAPI.Infrastructure.Data;
+using CadastroAPI.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,58 +12,103 @@ namespace CadastroAPI.Controllers
     [ApiController]
     public class ClienteController : ControllerBase
     {
-        private static List<Cliente> clientes = new List<Cliente>();
+        private IClienteRepository repository;
+        public ClienteController(IClienteRepository repository)
+        {
+            this.repository = repository;
+        }
         // GET: api/<ClienteController>
         [HttpGet]
-        public IEnumerable<Cliente> Get()
+        public IActionResult Get()
         {
-            return clientes;
+            try
+            {
+                List<Cliente> clientes = repository.GetAll();
+                return Ok(clientes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno: {ex.Message}");
+            }
         }
 
         // GET api/<ClienteController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetById(int id)
         {
-            Cliente cliente = clientes.FirstOrDefault(cliente => cliente.Id == id);
-            if (cliente != null)
+            try
             {
+                Cliente cliente = repository.GetById(id);
+                if (cliente == null)
+                {
+                    return NotFound();
+                }
                 return Ok(cliente);
             }
-            return NotFound();
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno: {ex.Message}");
+            }
         }
 
         // POST api/<ClienteController>
         [HttpPost]
-        public void Post([FromBody] Cliente cliente)
+        public IActionResult Post([FromBody] Cliente cliente)
         {
-            clientes.Add(cliente);
+            try
+            {
+                repository.Add(cliente);
+                return CreatedAtAction(nameof(GetById), new { id = cliente.Id }, cliente);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno: {ex.Message}");
+            }
         }
 
         // PATCH api/<ClienteController>/5
         [HttpPatch("{id}")]
-        public IActionResult Patch(int id)
+        public IActionResult Patch([FromBody] Cliente cliente)
         {
-            Cliente cliente = clientes.FirstOrDefault(cliente => cliente.Id == id);
-            return NotFound();
+            try
+            {
+                repository.Update(cliente);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno: {ex.Message}");
+            }
         }
 
         // PUT api/<ClienteController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] Cliente cliente)
         {
-            Cliente cliente = clientes.FirstOrDefault(cliente => cliente.Id == id);
-            if (cliente != null)
+            try
             {
+                repository.Update(cliente);
+                return NoContent();
             }
-            return NotFound();
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno: {ex.Message}");
+            }
         }
 
         // DELETE api/<ClienteController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            Cliente cliente = clientes.FirstOrDefault(cliente => cliente.Id == id);
-            return NotFound();
+            try
+            {
+                repository.Delete(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno: {ex.Message}");
+            }
         }
 
     }

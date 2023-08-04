@@ -1,4 +1,6 @@
+using CadastroAPI.Domain.Interfaces;
 using CadastroAPI.Infrastructure.Data;
+using CadastroAPI.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,8 +14,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Configurando Entity Framework
-var connectionString = builder.Configuration.GetConnectionString("CadastroConnection");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ClienteContext>(opts => opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 
 var app = builder.Build();
 
