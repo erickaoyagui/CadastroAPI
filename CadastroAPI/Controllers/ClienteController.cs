@@ -81,29 +81,22 @@ namespace CadastroAPI.Controllers
             }
         }
 
-        // PUT api/<ClienteController>/5
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Cliente cliente)
-        {
-            try
-            {
-                repository.Update(cliente);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Erro interno: {ex.Message}");
-            }
-        }
-
         // DELETE api/<ClienteController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             try
             {
-                repository.Delete(id);
-                return NoContent();
+                Cliente cliente = repository.GetById(id);
+                if (cliente == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    repository.Delete(id);
+                    return NoContent();
+                }
             }
             catch (Exception ex)
             {
