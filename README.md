@@ -15,9 +15,9 @@ Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
 
 2. Abra a solução no Visual Studio:
 
-  a. Inicie a solução "docker-compose" caso queira utilizar os containeres da API e do banco de dados;
+  - Inicie a solução "docker-compose" caso queira utilizar os containeres da API e do banco de dados;
   
-  b. Inicie a solução "CadastroAPI" caso queira apenas a API;
+  - Inicie a solução "CadastroAPI" caso queira apenas a API;
 
 4. Realize as chamadas através do Swagger aberto ou Postman/Insomnia;
 
