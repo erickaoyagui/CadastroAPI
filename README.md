@@ -19,7 +19,7 @@ Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
   
   - Inicie a solução "CadastroAPI" caso queira apenas a API;
 
-4. Realize as chamadas através do Swagger aberto ou Postman/Insomnia;
+3. Realize as chamadas através do Swagger aberto ou Postman/Insomnia;
 
 ## Como Rodar os Testes
 
