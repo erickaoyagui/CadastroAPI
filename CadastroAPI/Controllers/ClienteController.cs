@@ -18,6 +18,12 @@ namespace CadastroAPI.Controllers
             this.repository = repository;
         }
         // GET: api/<ClienteController>
+        /// <summary>
+        /// Obtém a lista de todos os clientes.
+        /// </summary>
+        /// <returns>IActionResult</returns>
+        /// <response code="200">Caso retorne a lista normalmente</response>
+        /// <response code="500">Caso retorne erro interno</response>
         [HttpGet]
         public IActionResult Get()
         {
@@ -32,7 +38,15 @@ namespace CadastroAPI.Controllers
             }
         }
 
-        // GET api/<ClienteController>/5
+        // GET api/<ClienteController>/
+        /// <summary>
+        /// Obtém os detalhes de um cliente pelo ID.
+        /// </summary>
+        /// <param name="id">ID do cliente a ser obtido</param>
+        /// <returns>IActionResult</returns>
+        /// <response code="200">Caso encontre o cliente no id especificado</response>
+        /// <response code="404">Caso não encontre o cliente no id especificado</response>
+        /// <response code="500">Caso retorne erro interno</response>
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -51,6 +65,13 @@ namespace CadastroAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Cria um novo cliente.
+        /// </summary>
+        /// <param name="cliente">Detalhes do cliente a serem criados</param>
+        /// <returns>IActionResult</returns>
+        /// <response code="201">Caso a inserção seja feita com sucesso</response>
+        /// <response code="500">Caso retorne erro interno</response>
         // POST api/<ClienteController>
         [HttpPost]
         public IActionResult Post([FromBody] Cliente cliente)
@@ -66,7 +87,15 @@ namespace CadastroAPI.Controllers
             }
         }
 
-        // PATCH api/<ClienteController>/5
+        // PATCH api/<ClienteController>/
+        /// <summary>
+        /// Atualiza os detalhes de um cliente pelo ID.
+        /// </summary>
+        /// <param name="id">ID do cliente a ser atualizado</param>
+        /// <param name="cliente">Detalhes atualizados do cliente</param>
+        /// <returns>IActionResult</returns>
+        /// <response code="204">Caso a atualização seja feita com sucesso</response>
+        /// <response code="500">Caso retorne erro interno</response>
         [HttpPatch("{id}")]
         public IActionResult Patch([FromBody] Cliente cliente)
         {
@@ -81,7 +110,15 @@ namespace CadastroAPI.Controllers
             }
         }
 
-        // DELETE api/<ClienteController>/5
+        // DELETE api/<ClienteController>/
+        /// <summary>
+        /// Exclui um cliente pelo ID.
+        /// </summary>
+        /// <param name="id">ID do cliente a ser excluído</param>
+        ///<returns>IActionResult</returns>
+        /// <response code="204">Caso a remoção seja feita com sucesso</response>
+        /// <response code="404">Caso a remoção seja feita com sucesso</response>
+        /// <response code="500">Caso retorne erro interno</response>
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

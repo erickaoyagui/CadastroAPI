@@ -2,21 +2,23 @@ version: '3.4'
 
 services:
   cadastroapi:
-    image: ${DOCKER_REGISTRY-}cadastroapi
+    #image: ${DOCKER_REGISTRY-}cadastroapi
+    image: 230529021354.dkr.ecr.sa-east-1.amazonaws.com/cadastroapi:latest
     build:
       context: .
       dockerfile: CadastroAPI/Dockerfile
     ports:
-      - "5000:80"
+      - "80:80"
     depends_on:
-      - db
+      - db 
     environment:
       - ConnectionStrings__DefaultConnection=Server=db;Port=3306;Database=cadastroDb;User=erick;Password=erick
     networks:
       - my_net
 
   db:
-    image: mysql:latest
+    #image: mysql:latest
+    image: public.ecr.aws/docker/library/mysql:oracle
     container_name: mysqldb
     restart: always
     ports:
