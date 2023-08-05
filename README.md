@@ -1,6 +1,6 @@
 # CadastroAPI
 
-Bem-vindo ao projeto CadastroAPI! Esta é uma API de cadastro desenvolvida em .NET Core utilizando padrões REST, DDD e arquitetura hexagonal.
+Bem-vindo ao projeto CadastroAPI! Esta é uma API de cadastro desenvolvida em .NET Core utilizando Docker para a criação de containeres para a integração com banco de dados.
 
 ## Pré-requisitos
 
