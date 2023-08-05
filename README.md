@@ -8,6 +8,7 @@ Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
 
 - [.NET Core SDK](https://dotnet.microsoft.com/download)
 - [Docker](https://www.docker.com/get-started)
+- [Visual Studio](https://visualstudio.microsoft.com/pt-br)
 
 ## Como Rodar a Aplicação
 
