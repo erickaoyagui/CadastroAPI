@@ -12,10 +12,12 @@ namespace CadastroAPI.Controllers
     [ApiController]
     public class ClienteController : ControllerBase
     {
-        private IClienteRepository repository;
-        public ClienteController(IClienteRepository repository)
+        private IClienteRepository _repository;
+        private readonly ILogger<ClienteController> _logger;
+        public ClienteController(IClienteRepository repository, ILogger<ClienteController> logger)
         {
-            this.repository = repository;
+            _repository = repository;
+            _logger = logger;
         }
         // GET: api/<ClienteController>
         /// <summary>
@@ -29,11 +31,13 @@ namespace CadastroAPI.Controllers
         {
             try
             {
-                List<Cliente> clientes = repository.GetAll();
+                List<Cliente> clientes = _repository.GetAll();
+                _logger.LogInformation("Chamada GetAll");
                 return Ok(clientes);
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Erro interno: {ex.Message}");
                 return StatusCode(500, $"Erro interno: {ex.Message}");
             }
         }
@@ -52,15 +56,18 @@ namespace CadastroAPI.Controllers
         {
             try
             {
-                Cliente cliente = repository.GetById(id);
+                Cliente cliente = _repository.GetById(id);
                 if (cliente == null)
                 {
+                    _logger.LogWarning($"Chamada Get NotFound: {id}");
                     return NotFound();
                 }
+                _logger.LogInformation($"Chamada Get Retornando Id: {cliente.Id}");
                 return Ok(cliente);
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Erro interno: {ex.Message}");
                 return StatusCode(500, $"Erro interno: {ex.Message}");
             }
         }
@@ -78,11 +85,13 @@ namespace CadastroAPI.Controllers
         {
             try
             {
-                repository.Add(cliente);
+                _repository.Add(cliente);
+                _logger.LogInformation($"Chamada Post Inserido");
                 return CreatedAtAction(nameof(GetById), new { id = cliente.Id }, cliente);
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Erro interno: {ex.Message}");
                 return StatusCode(500, $"Erro interno: {ex.Message}");
             }
         }
@@ -101,11 +110,13 @@ namespace CadastroAPI.Controllers
         {
             try
             {
-                repository.Update(cliente);
+                _repository.Update(cliente);
+                _logger.LogInformation($"Chamada Patch atualizado Cliente Id: {cliente.Id}");
                 return NoContent();
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Erro interno: {ex.Message}");
                 return StatusCode(500, $"Erro interno: {ex.Message}");
             }
         }
@@ -124,19 +135,22 @@ namespace CadastroAPI.Controllers
         {
             try
             {
-                Cliente cliente = repository.GetById(id);
+                Cliente cliente = _repository.GetById(id);
                 if (cliente == null)
                 {
+                    _logger.LogWarning($"Chamada Delete NotFound: {id}");
                     return NotFound();
                 }
                 else
                 {
-                    repository.Delete(id);
+                    _repository.Delete(id);
+                    _logger.LogInformation($"Chamada Delete removido Cliente Id: {id}");
                     return NoContent();
                 }
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Erro interno: {ex.Message}");
                 return StatusCode(500, $"Erro interno: {ex.Message}");
             }
         }

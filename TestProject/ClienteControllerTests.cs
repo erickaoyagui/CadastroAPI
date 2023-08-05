@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using static System.Net.Mime.MediaTypeNames;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace TestProject
 {
@@ -23,9 +24,10 @@ namespace TestProject
             Cliente clienteEsperado = new Cliente { Id = 1, Nome = "João", Sobrenome = "Silva", Idade = 30, Pais = "Brasil" };
 
             Mock<IClienteRepository> repositoryMock = new Mock<IClienteRepository>();
+            Mock<ILogger<ClienteController>> loggerMock = new Mock<ILogger<ClienteController>>();
             repositoryMock.Setup(repo => repo.GetById(1)).Returns(clienteEsperado);
 
-            ClienteController controller = new ClienteController(repositoryMock.Object);
+            ClienteController controller = new ClienteController(repositoryMock.Object, loggerMock.Object);
 
             // Act
             var resultado = controller.GetById(1);
@@ -49,9 +51,10 @@ namespace TestProject
         {
             // Arrange
             Mock<IClienteRepository> repositoryMock = new Mock<IClienteRepository>();
+            Mock<ILogger<ClienteController>> loggerMock = new Mock<ILogger<ClienteController>>();
             //repositoryMock.Setup(repo => repo.GetById(999)).Returns((Cliente)null);
 
-            ClienteController controller = new ClienteController(repositoryMock.Object);
+            ClienteController controller = new ClienteController(repositoryMock.Object, loggerMock.Object);
 
             // Act
             var resultado = controller.GetById(999);
@@ -66,13 +69,14 @@ namespace TestProject
         {
             // Arrange
             Mock<IClienteRepository> repositoryMock = new Mock<IClienteRepository>();
+            Mock<ILogger<ClienteController>> loggerMock = new Mock<ILogger<ClienteController>>();
             repositoryMock.Setup(repo => repo.GetAll()).Returns(new List<Cliente>
             {
                 new Cliente { Id = 1, Nome = "João", Sobrenome = "Silva", Idade = 30, Pais = "Brasil" },
                 new Cliente { Id = 2, Nome = "Maria", Sobrenome = "Silva", Idade = 33, Pais = "Argentina" }
             });
 
-            ClienteController controller = new ClienteController(repositoryMock.Object);
+            ClienteController controller = new ClienteController(repositoryMock.Object, loggerMock.Object);
 
             // Act
             var resultado = controller.Get();
@@ -95,8 +99,9 @@ namespace TestProject
             Cliente clienteEsperado = new Cliente { Id = 1, Nome = "João", Sobrenome = "Silva", Idade = 30, Pais = "Brasil" };
 
             Mock<IClienteRepository> repositoryMock = new Mock<IClienteRepository>();
+            Mock<ILogger<ClienteController>> loggerMock = new Mock<ILogger<ClienteController>>();
 
-            ClienteController controller = new ClienteController(repositoryMock.Object);
+            ClienteController controller = new ClienteController(repositoryMock.Object, loggerMock.Object);
 
             // Act
             var resultado = controller.Post(clienteEsperado);
@@ -125,8 +130,9 @@ namespace TestProject
             Cliente clienteEsperado = new Cliente { Id = 1, Nome = "João", Sobrenome = "Silva", Idade = 30, Pais = "Brasil" };
 
             Mock<IClienteRepository> repositoryMock = new Mock<IClienteRepository>();
+            Mock<ILogger<ClienteController>> loggerMock = new Mock<ILogger<ClienteController>>();
 
-            ClienteController controller = new ClienteController(repositoryMock.Object);
+            ClienteController controller = new ClienteController(repositoryMock.Object, loggerMock.Object);
 
             // Act
             var resultado = controller.Patch(clienteEsperado);
@@ -142,9 +148,10 @@ namespace TestProject
             // Arrange
             Cliente clienteEsperado = new Cliente { Id = 1, Nome = "João", Sobrenome = "Silva", Idade = 30, Pais = "Brasil" };
             Mock<IClienteRepository> repositoryMock = new Mock<IClienteRepository>();
+            Mock<ILogger<ClienteController>> loggerMock = new Mock<ILogger<ClienteController>>();
             repositoryMock.Setup(repo => repo.GetById(1)).Returns(clienteEsperado);
 
-            ClienteController controller = new ClienteController(repositoryMock.Object);
+            ClienteController controller = new ClienteController(repositoryMock.Object, loggerMock.Object);
 
             // Act
             var resultado = controller.Delete(1);
@@ -160,9 +167,10 @@ namespace TestProject
             // Arrange
             Cliente clienteEsperado = new Cliente { Id = 1, Nome = "João", Sobrenome = "Silva", Idade = 30, Pais = "Brasil" };
             Mock<IClienteRepository> repositoryMock = new Mock<IClienteRepository>();
+            Mock<ILogger<ClienteController>> loggerMock = new Mock<ILogger<ClienteController>>();
             repositoryMock.Setup(repo => repo.GetById(1)).Returns(clienteEsperado);
 
-            ClienteController controller = new ClienteController(repositoryMock.Object);
+            ClienteController controller = new ClienteController(repositoryMock.Object, loggerMock.Object);
 
             // Act
             var resultado = controller.Delete(999);

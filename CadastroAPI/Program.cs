@@ -26,6 +26,8 @@ builder.Services.AddDbContext<ClienteContext>(opts => opts.UseMySql(connectionSt
 
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 
+builder.Services.AddLogging();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -10,7 +10,6 @@ namespace CadastroAPI.Domain.Entities
     public class Cliente
     {
         [Key]
-        [Required]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "O nome é obrigatório")]
